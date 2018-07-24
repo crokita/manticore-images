@@ -1,0 +1,1 @@
+This repository is strictly for [Manticore's](https://github.com/smartdevicelink/manticore) usage.
