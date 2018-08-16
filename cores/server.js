@@ -8,7 +8,6 @@ const wss = new WebSocket.Server({
 
 wss.on('connection', function (ws) {
 	const buffer = [];
-	let requestedData = true;
 	//tail stream the contents of the file
     const tstream = ts.createReadStream(FILE_PATH, {
         beginAt: 0,
@@ -19,16 +18,13 @@ wss.on('connection', function (ws) {
     	buffer.push(data);
     	sendData();
     });
-    //pass the contents in the buffer to the client only on request
+
     ws.on('message', function () {
-    	requestedData = true;
-    	sendData();
     });
 
     function sendData () {
-		if (buffer.length > 0 && requestedData) {
+		if (buffer.length > 0) {
     		ws.send(buffer.shift());
-    		requestedData = false;
     	}    	
     }
 });
